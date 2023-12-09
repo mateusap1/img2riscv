@@ -1,4 +1,4 @@
-# BMP2RISC-V
+# IMG2RISC-V
 
 O objetivo desse repositório é fornecer uma ferramenta capaz de transformar qualquer imagem em um .s pronto para ser usado no RISC-V.
 
