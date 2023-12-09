@@ -5,3 +5,7 @@ O objetivo desse repositório é fornecer uma ferramenta capaz de transformar qu
 Atualmente, foi testado apenas no MacOS e com os formatos BMP, JPEG e PNG.
 
 ## Como usar
+Exemplo
+```
+cargo run examples/test.jpeg
+```
