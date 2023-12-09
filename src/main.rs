@@ -1,5 +1,6 @@
 extern crate image;
 
+use clap::Parser;
 use image::{DynamicImage, GenericImageView, Rgba};
 use std::fs;
 
@@ -51,13 +52,20 @@ fn image_array_to_string(name: &str, image_array: Vec<u8>, dimensions: (u32, u32
     )
 }
 
+#[derive(Parser)]
+struct Cli {
+    image_path: std::path::PathBuf,
+}
+
 fn main() {
-    // const DIMENSIONS: (u32, u32)
-    let image_path = "examples/frogger.bmp";
+    let args = Cli::parse();
 
     // Use the open function to load an image from a Path.
     // `open` returns a `DynamicImage` on success.
-    let image: DynamicImage = image::open(image_path).unwrap();
+    let image: DynamicImage = image::open(&args.image_path).unwrap();
+
+    let name = args.image_path.file_stem().unwrap().to_str().unwrap();
+    println!("name: {}", name);
 
     // The dimensions method returns the images width and height.
     let dimensions: (u32, u32) = image.dimensions();
@@ -66,6 +74,6 @@ fn main() {
     let image_array: Vec<u8> = image_to_riscv(image, dimensions);
     println!("image length {:?}", image_array.len());
 
-    let data = image_array_to_string("frogger", image_array, dimensions);
-    fs::write("./frogger.s", data).expect("Unable to write file");
+    let data = image_array_to_string(name, image_array, dimensions);
+    fs::write(format!("./{}.s", name), data).expect("Unable to write file");
 }
